@@ -19,7 +19,9 @@ public class PlumberController : MonoBehaviour {
 
     void FixedGravityUpdate()
     {
-        rigidbody2d.AddForce(CalculateGravityVector());
+        Physics2D.gravity = CalculateGravityVector();
+
+        //rigidbody2d.AddForce(CalculateGravityVector());
     }
 
     /*GameObject FindClosestPlanet()
@@ -56,10 +58,10 @@ public class PlumberController : MonoBehaviour {
             //Should probably be multiplied with something rather than having this check
             if (vectorToPlanet.sqrMagnitude < 16)
             {
-                gravityVector += vectorToPlanet.normalized;
+                gravityVector += vectorToPlanet.normalized * (planet.transform.localScale.magnitude * 0.2f);
                 planetCount += 1f;
             }
-        }
+        } 
 
         gravityVector /= planetCount;
 
