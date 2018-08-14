@@ -4,43 +4,39 @@ using UnityEngine;
 
 public class PlumberUserControl : MonoBehaviour {
     public GameObject Ground;
-    public bool Jump;
-    public bool CanMoveLeft;
-    public bool CanMoveRight;
     public Animator SpriteControl;
-    // Use this for initialization
+
+    private Rigidbody2D rb;
+
+    private bool grounded;
+
     void Start () {
-		
+        rb = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	void FixedUpdate () {
         if (Ground != null)
         {
-            //Quaternion.RotateTowards(transform.rotation, Ground.transform.rotation, 1);
+            transform.right = Vector2.Lerp(transform.right, Vector2.Perpendicular(Ground.transform.position - transform.position), 2f * Time.fixedDeltaTime);
         }
 
-        if (Input.GetAxis("Horizontal") > 0.05 && Ground != null && CanMoveLeft == true)
+        float hAxis = Input.GetAxisRaw("Horizontal");
+
+        if (Mathf.Abs(hAxis) > 0.1f)
         {
-            transform.RotateAround(Ground.transform.position, Vector3.forward, 40 * Time.deltaTime * -1);
-            transform.localScale = new Vector3(1, 1, 1);
+            Vector2 newSpeed = rb.velocity + (Vector2)transform.right * 100f * hAxis * Time.fixedDeltaTime;
+
+            if (newSpeed.sqrMagnitude < 16)
+            {
+                rb.velocity = newSpeed;
+            }
         }
 
-        if (Input.GetAxis("Horizontal") < -0.05 && Ground != null && CanMoveRight == true)
+        if (Input.GetButton("Jump") && grounded)
         {
-            transform.RotateAround(Ground.transform.position, Vector3.forward, 40 * Time.deltaTime * 1);
-            transform.localScale = new Vector3(-1, 1, 1);
+            rb.AddForce(Vector2.up * 10f, ForceMode2D.Impulse);
         }
-
-        if (Input.GetKeyDown("space") && Jump == false)
-        {
-            Jump = true;
-            Debug.Log("ADD");
-            GetComponent<Rigidbody2D>().AddForce(transform.TransformDirection(Vector3.up) * Time.deltaTime * 40000);
-            SpriteControl.SetBool("Jump", true);
-        }
-
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -48,22 +44,12 @@ public class PlumberUserControl : MonoBehaviour {
         if (collision.gameObject.tag == "Planet")
         {
             Ground = collision.gameObject;
-            Jump = false;
-            SpriteControl.SetBool("Jump", false);
-        }
-
-        if (collision.gameObject.tag == "NonPlanetGround")
-        {
-            Jump = false;
-            SpriteControl.SetBool("Jump", false);
+            grounded = true;
         }
     }
 
     public void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Planet")
-        {
-          
-        }
+        grounded = false;
     }
 }
