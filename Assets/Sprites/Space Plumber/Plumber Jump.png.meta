@@ -1,15 +1,10 @@
 fileFormatVersion: 2
-guid: cb7c3572f3013d6448c6332bbc6d3af6
+guid: 4700d027230bb8743944f3daa2203e5b
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Plumber Walk_0
-    21300002: Plumber Walk_1
-    21300004: Plumber Walk_2
-    21300006: Plumber Walk_3
-    21300008: Plumber Walk_4
-    21300010: Plumber Walk_5
-    21300012: Plumber Walk_6
-    21300014: Plumber Walk_7
+    21300000: Plumber Jump_0
+    21300002: Plumber Jump_1
+    21300004: Plumber Jump_2
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -125,72 +120,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Plumber Walk_0
+      name: Plumber Jump_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 65
-        width: 15
-        height: 27
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 61c89a8960a0fb64e902692f8150c15f
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plumber Walk_1
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 65
-        width: 15
-        height: 27
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eff45619d3c83d841bd1eb70b83a607d
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plumber Walk_2
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 65
-        width: 15
-        height: 27
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d0b8ea0279c39af4eb9929943afaca9f
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plumber Walk_3
-      rect:
-        serializedVersion: 2
-        x: 8
+        x: 6
         y: 33
-        width: 15
+        width: 20
         height: 27
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -199,18 +134,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16d5f42c49675b949bad6d295682d1af
+      spriteID: 8e43f13b399066548a306f80015c4263
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Plumber Walk_4
+      name: Plumber Jump_1
       rect:
         serializedVersion: 2
-        x: 40
+        x: 38
         y: 33
-        width: 15
+        width: 20
         height: 27
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -219,38 +154,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91610d8df705da343b4398d6518a043a
+      spriteID: d40c011d75f19c74ba4da3bfcf92bdde
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Plumber Walk_5
+      name: Plumber Jump_2
       rect:
         serializedVersion: 2
-        x: 72
-        y: 33
-        width: 15
-        height: 27
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e3424db437bf86f4e82751abc3aa7803
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plumber Walk_6
-      rect:
-        serializedVersion: 2
-        x: 8
+        x: 6
         y: 1
-        width: 15
+        width: 20
         height: 27
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -259,27 +174,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed3b78b93b8c8cb4e9b6647183cc56fe
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plumber Walk_7
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 1
-        width: 15
-        height: 27
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4b1a0230e5b2e9947a7f64d6ced4d9ab
+      spriteID: bfafc800d72e58549a27f794c01b7dab
       vertices: []
       indices: 
       edges: []
@@ -287,7 +182,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 055d8f8cdf051da4087abf9af2339974
+    spriteID: f7da5451991f0f540941e973a2281770
     vertices: []
     indices: 
     edges: []

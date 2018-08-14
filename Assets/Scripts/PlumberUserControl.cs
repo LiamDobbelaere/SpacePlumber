@@ -5,14 +5,19 @@ using UnityEngine;
 public class PlumberUserControl : MonoBehaviour {
     public GameObject Ground;
     public bool Jump;
-	// Use this for initialization
-	void Start () {
+    public Animator SpriteControl;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        if (Ground != null)
+        {
+            //Quaternion.RotateTowards(transform.rotation, Ground.transform.rotation, 1);
+        }
 
         if (Input.GetAxis("Horizontal") > 0.05 && Ground != null)
         {
@@ -31,6 +36,7 @@ public class PlumberUserControl : MonoBehaviour {
             Jump = true;
             Debug.Log("ADD");
             GetComponent<Rigidbody2D>().AddForce(transform.TransformDirection(Vector3.up) * Time.deltaTime * 40000);
+            SpriteControl.SetBool("Jump", true);
         }
 
     }
@@ -41,6 +47,7 @@ public class PlumberUserControl : MonoBehaviour {
         {
             Ground = collision.gameObject;
             Jump = false;
+            SpriteControl.SetBool("Jump", false);
         }
     }
 
