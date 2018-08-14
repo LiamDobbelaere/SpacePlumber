@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlumberUserControl : MonoBehaviour {
     public GameObject Ground;
     public bool Jump;
+    public bool CanMoveLeft;
+    public bool CanMoveRight;
     public Animator SpriteControl;
     // Use this for initialization
     void Start () {
@@ -19,13 +21,13 @@ public class PlumberUserControl : MonoBehaviour {
             //Quaternion.RotateTowards(transform.rotation, Ground.transform.rotation, 1);
         }
 
-        if (Input.GetAxis("Horizontal") > 0.05 && Ground != null)
+        if (Input.GetAxis("Horizontal") > 0.05 && Ground != null && CanMoveLeft == true)
         {
             transform.RotateAround(Ground.transform.position, Vector3.forward, 40 * Time.deltaTime * -1);
             transform.localScale = new Vector3(1, 1, 1);
         }
 
-        if (Input.GetAxis("Horizontal") < -0.05 && Ground != null)
+        if (Input.GetAxis("Horizontal") < -0.05 && Ground != null && CanMoveRight == true)
         {
             transform.RotateAround(Ground.transform.position, Vector3.forward, 40 * Time.deltaTime * 1);
             transform.localScale = new Vector3(-1, 1, 1);
@@ -46,6 +48,12 @@ public class PlumberUserControl : MonoBehaviour {
         if (collision.gameObject.tag == "Planet")
         {
             Ground = collision.gameObject;
+            Jump = false;
+            SpriteControl.SetBool("Jump", false);
+        }
+
+        if (collision.gameObject.tag == "NonPlanetGround")
+        {
             Jump = false;
             SpriteControl.SetBool("Jump", false);
         }
