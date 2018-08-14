@@ -14,20 +14,20 @@ public class PlumberUserControl : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
         if (Ground != null)
         {
             //Quaternion.RotateTowards(transform.rotation, Ground.transform.rotation, 1);
         }
 
-        if (Input.GetAxis("Horizontal") > 0.05 && Ground != null && CanMoveLeft == true)
+        if (Input.GetAxisRaw("Horizontal") > 0.05 && Ground != null && CanMoveLeft == true)
         {
             transform.RotateAround(Ground.transform.position, Vector3.forward, 40 * Time.deltaTime * -1);
             transform.localScale = new Vector3(1, 1, 1);
         }
 
-        if (Input.GetAxis("Horizontal") < -0.05 && Ground != null && CanMoveRight == true)
+        if (Input.GetAxisRaw("Horizontal") < -0.05 && Ground != null && CanMoveRight == true)
         {
             transform.RotateAround(Ground.transform.position, Vector3.forward, 40 * Time.deltaTime * 1);
             transform.localScale = new Vector3(-1, 1, 1);
