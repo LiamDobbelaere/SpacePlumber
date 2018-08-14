@@ -34,6 +34,20 @@ public class TeleportRing : MonoBehaviour {
         if (Teleporting == true)
         {
             SuperPlumber.position = Vector2.MoveTowards(new Vector2(SuperPlumber.position.x, SuperPlumber.position.y), Teleport.position, 200 * Time.deltaTime);
+            SuperPlumber.GetComponent<Rigidbody2D>().isKinematic = true;
+            SuperPlumber.GetComponent<PlumberUserControl>().CanMoveLeft = false;
+            SuperPlumber.GetComponent<PlumberUserControl>().CanMoveRight = false;
+            SuperPlumber.GetComponent<PlumberUserControl>().Jump = true;
+        }
+
+        if (SuperPlumber.position == Teleport.position)
+        {
+            Teleporting = false;
+            SuperPlumber.transform.rotation = Teleport.transform.rotation;
+            SuperPlumber.GetComponent<Rigidbody2D>().isKinematic = false;
+            SuperPlumber.GetComponent<PlumberUserControl>().CanMoveLeft = true;
+            SuperPlumber.GetComponent<PlumberUserControl>().CanMoveRight = true;
+            SuperPlumber.GetComponent<PlumberUserControl>().Jump = false;
         }
 	}
 }

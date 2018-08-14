@@ -28,4 +28,12 @@ public class BoombaAI : MonoBehaviour {
         change = false;
     }
 
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Obstacle" || collision.gameObject.tag == "Enemy")
+        {
+            multiplier *= -1;
+        }
+    }
+
 }
