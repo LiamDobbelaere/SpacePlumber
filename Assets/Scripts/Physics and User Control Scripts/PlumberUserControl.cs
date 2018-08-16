@@ -7,6 +7,7 @@ public class PlumberUserControl : MonoBehaviour {
     public bool Jump;
     public bool CanMoveLeft;
     public bool CanMoveRight;
+    public Manager HUD;
     public Animator SpriteControl;
     // Use this for initialization
     void Start () {
@@ -56,6 +57,16 @@ public class PlumberUserControl : MonoBehaviour {
         {
             Jump = false;
             SpriteControl.SetBool("Jump", false);
+        }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Jump = true;
+            Debug.Log("ADD");
+            GetComponent<Rigidbody2D>().AddForce(transform.TransformDirection(Vector3.up) * Time.deltaTime * 5000);
+            SpriteControl.SetBool("Jump", true);
+            //Destroy(collision.gameObject);
+            HUD.Health--;
         }
     }
 

@@ -5,11 +5,14 @@ using UnityEngine;
 public class PlumberCamera : MonoBehaviour {
     public float lerpSpeed = 10f;
 
-    private Transform plumber;
+    public Transform plumber;
 
     // Use this for initialization
     void Start () {
-        plumber = GameObject.FindGameObjectWithTag("Player").transform;
+        if (plumber == null)
+        {
+            plumber = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     // Update is called once per frame

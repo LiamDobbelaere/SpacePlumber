@@ -25,7 +25,7 @@ public class TeleportRing : MonoBehaviour {
         }
     }
     // Update is called once per frame
-    void Update () {
+    void FixedUpdate () {
 		if (Input.GetKeyDown("space") && InRange == true)
         {
             Teleporting = true;
