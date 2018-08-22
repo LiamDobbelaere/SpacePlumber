@@ -20,7 +20,14 @@ public class PlumberController : MonoBehaviour {
 
     void FixedMovementUpdate()
     {
-        Vector2 forward = Vector2.Perpendicular(Physics2D.gravity);
+        Vector2 forward = Vector2.Perpendicular(Physics2D.gravity.normalized);
+
+        rigidbody2d.AddForce(forward * Input.GetAxisRaw("Horizontal") * 5f);
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            rigidbody2d.AddForce(-Physics2D.gravity.normalized * 2f, ForceMode2D.Impulse);
+        }
 
         Debug.DrawRay(transform.position, forward * 1f, Color.green);
     }
@@ -31,7 +38,7 @@ public class PlumberController : MonoBehaviour {
         Debug.DrawRay(transform.position, Physics2D.gravity * 1f, Color.cyan);
     }
 
-    /*GameObject FindClosestPlanet()
+    GameObject FindClosestPlanet()
     {
         GameObject closestPlanet = null;
         float closestDistance = Mathf.Infinity;
@@ -50,9 +57,34 @@ public class PlumberController : MonoBehaviour {
         }
 
         return closestPlanet;
-    }*/
+    }
 
     Vector2 CalculateGravityVector()
+    {
+        Vector2 gravityVector = new Vector2(0, 0);
+
+        GameObject closest = FindClosestPlanet();
+
+        if (closest != null)
+        {
+            Vector2 vectorToPlanet = closest.transform.position - transform.position;
+            CircleCollider2D cc = closest.GetComponent<CircleCollider2D>();
+
+            float estimatedRadius = cc.bounds.extents.x * 1.25f;
+            float attractionPower = estimatedRadius / Vector2.Distance(closest.transform.position, transform.position);
+
+            Debug.DrawLine(closest.transform.position, transform.position, Color.grey);
+
+            gravityVector += vectorToPlanet.normalized * attractionPower * (closest.transform.localScale.magnitude * 0.2f);
+        }
+
+        return gravityVector;
+    }
+
+    //Realistic means all planets attract the object a certain amount all the time, like in space
+    //Unfortunately, this isn't what we want for our platformer since it slings the player around
+    //Left it here because it's cool
+    Vector2 CalculateGravityVectorRealistic()
     {
         Vector2 gravityVector = new Vector2(0, 0);
         float planetCount = 0f;
@@ -68,14 +100,9 @@ public class PlumberController : MonoBehaviour {
             float attractionPower = estimatedRadius / Vector2.Distance(planet.transform.position, transform.position);
             Debug.Log(attractionPower);
 
-            //sqrMagnitude can be seen as the pull distance
-            //Should probably be multiplied with something rather than having this check
-            //if (Vector2.Distance(planet.transform.position, transform.position) < estimatedRadius)
-            //{
-                Debug.DrawLine(transform.position, planet.transform.position, Color.gray);
-                gravityVector += vectorToPlanet.normalized * attractionPower * (planet.transform.localScale.magnitude * 0.2f);
-                planetCount += 1f;
-            //}
+            Debug.DrawLine(transform.position, planet.transform.position, Color.gray);
+            gravityVector += vectorToPlanet.normalized * attractionPower * (planet.transform.localScale.magnitude * 0.2f);
+            planetCount += 1f;
         } 
 
         if (planetCount > 0)
