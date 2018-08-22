@@ -24,10 +24,14 @@ public class PlumberController : MonoBehaviour {
 
         rigidbody2d.AddForce(forward * Input.GetAxisRaw("Horizontal") * 5f);
 
+        //Todo grounded raycast check
         if (Input.GetButtonDown("Jump"))
         {
             rigidbody2d.AddForce(-Physics2D.gravity.normalized * 2f, ForceMode2D.Impulse);
         }
+
+        //Limits the character from going as fast as sonic
+        rigidbody2d.velocity = Vector2.ClampMagnitude(rigidbody2d.velocity, 5f);
 
         Debug.DrawRay(transform.position, forward * 1f, Color.green);
     }
