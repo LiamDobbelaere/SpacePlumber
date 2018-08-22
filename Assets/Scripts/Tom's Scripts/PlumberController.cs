@@ -5,17 +5,52 @@ using UnityEngine;
 public class PlumberController : MonoBehaviour {
     private GameObject[] planets;
     private Rigidbody2D rigidbody2d;
+    private Transform sprite;
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
+
+    private bool grounded;
+
+    private float jumpForce = 8f;
 
 	// Use this for initialization
 	void Start () {
         planets = GameObject.FindGameObjectsWithTag("Planet");
         rigidbody2d = GetComponent<Rigidbody2D>();
+        sprite = transform.Find("SpriteContainer");
+        anim = sprite.Find("Sprite").GetComponent<Animator>();
+        spriteRenderer = sprite.Find("Sprite").GetComponent<SpriteRenderer>();
 	}
 	
-	// Update is called once per frame
+	//Remember, physics related stuff always in FixedUpdate
 	void FixedUpdate () {
         FixedGravityUpdate();
         FixedMovementUpdate();
+    }
+
+    private void Update()
+    {
+        UpdateSpriteRotation();
+        UpdateAnimation();
+    }
+
+    void UpdateSpriteRotation()
+    {
+        Vector3 newAngles = new Vector3(0, 0, Vector2.SignedAngle(Vector2.down, Physics2D.gravity.normalized));
+
+        sprite.rotation = Quaternion.Lerp(Quaternion.Euler(sprite.localEulerAngles), Quaternion.Euler(newAngles), 10f * Time.fixedDeltaTime);
+    }
+
+    void UpdateAnimation()
+    {
+        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f)
+        {
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") < 0f;
+        }
+
+        anim.SetBool("Jump", !grounded);
+
+        //anim.SetBool()
     }
 
     void FixedMovementUpdate()
@@ -24,10 +59,16 @@ public class PlumberController : MonoBehaviour {
 
         rigidbody2d.AddForce(forward * Input.GetAxisRaw("Horizontal") * 5f);
 
+        Vector2 castPosition = (Vector2)transform.position + Physics2D.gravity.normalized * 0.6f;
+        RaycastHit2D groundCast = Physics2D.Raycast(castPosition, Physics2D.gravity.normalized, 0.05f);
+        grounded = groundCast.collider != null;
+
+        Debug.DrawRay(castPosition, Physics2D.gravity * 0.1f, grounded ? Color.cyan : Color.yellow);
+        
         //Todo grounded raycast check
-        if (Input.GetButtonDown("Jump"))
+        if (grounded && Input.GetButtonDown("Jump"))
         {
-            rigidbody2d.AddForce(-Physics2D.gravity.normalized * 2f, ForceMode2D.Impulse);
+            rigidbody2d.AddForce(-Physics2D.gravity.normalized * jumpForce, ForceMode2D.Impulse);
         }
 
         //Limits the character from going as fast as sonic
@@ -39,7 +80,6 @@ public class PlumberController : MonoBehaviour {
     void FixedGravityUpdate()
     {
         Physics2D.gravity = CalculateGravityVector();
-        Debug.DrawRay(transform.position, Physics2D.gravity * 1f, Color.cyan);
     }
 
     GameObject FindClosestPlanet()
