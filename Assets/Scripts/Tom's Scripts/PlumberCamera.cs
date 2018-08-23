@@ -7,12 +7,11 @@ public class PlumberCamera : MonoBehaviour {
 
     public Transform plumber;
 
+    private PlanetGravity pg;
+
     // Use this for initialization
     void Start () {
-        if (plumber == null)
-        {
-            plumber = GameObject.FindGameObjectWithTag("Player").transform;
-        }
+        pg = plumber.GetComponent<PlanetGravity>();
     }
 
     // Update is called once per frame
@@ -20,7 +19,7 @@ public class PlumberCamera : MonoBehaviour {
         Vector2 currentPos = transform.position;
         currentPos = Vector2.Lerp(currentPos, plumber.position, lerpSpeed * Time.fixedDeltaTime);
 
-        Vector3 newAngles = new Vector3(0, 0, Vector2.SignedAngle(Vector2.down, Physics2D.gravity.normalized));
+        Vector3 newAngles = new Vector3(0, 0, Vector2.SignedAngle(Vector2.down, pg.Gravity.normalized));
 
         transform.position = currentPos;
         transform.rotation = Quaternion.Lerp(Quaternion.Euler(transform.localEulerAngles), Quaternion.Euler(newAngles), lerpSpeed * Time.fixedDeltaTime);
