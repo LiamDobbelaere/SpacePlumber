@@ -46,7 +46,14 @@ public class BoombaAI : MonoBehaviour {
     {
         if (collision.collider.CompareTag("Player"))
         {
-            Debug.Log("OW");
+            Vector2 approachVector = collision.transform.position - transform.position;
+            Vector2 floor = Vector2.Perpendicular(pg.Gravity.normalized);
+            float angle = Vector2.Angle(approachVector, floor);
+
+            if (angle <= 135 && angle >= 45)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
