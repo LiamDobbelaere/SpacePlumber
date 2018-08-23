@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-[RequireComponent(typeof(PlanetGravity))]
 public class PlanetGravity : MonoBehaviour {
     private GameObject[] planets;
     private Rigidbody2D rigidbody2d;
+    private Transform sprite;
 
     public Vector2 Gravity { get; private set; }
 
@@ -14,18 +14,31 @@ public class PlanetGravity : MonoBehaviour {
     void Start () {
         planets = GameObject.FindGameObjectsWithTag("Planet");
         rigidbody2d = GetComponent<Rigidbody2D>();
+        sprite = transform.Find("SpriteContainer");
         Gravity = new Vector2(0, 0);
     }
 
     // Update is called once per frame
-    void FixedUpdate () {
+    void FixedUpdate() {
         Gravity = CalculateGravityVector();
         FixedGravityUpdate();
 	}
 
+    void Update()
+    {
+        UpdateSpriteRotation();
+    }
+
     void FixedGravityUpdate()
     {
         rigidbody2d.AddForce(Gravity);
+    }
+
+    void UpdateSpriteRotation()
+    {
+        Vector3 newAngles = new Vector3(0, 0, Vector2.SignedAngle(Vector2.down, Gravity.normalized));
+
+        sprite.rotation = Quaternion.Lerp(Quaternion.Euler(sprite.localEulerAngles), Quaternion.Euler(newAngles), 10f * Time.fixedDeltaTime);
     }
 
     GameObject FindClosestPlanet()

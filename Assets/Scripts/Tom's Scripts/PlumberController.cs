@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlanetGravity))]
 public class PlumberController : MonoBehaviour {
     private Rigidbody2D rigidbody2d;
     private Transform sprite;
@@ -31,15 +32,7 @@ public class PlumberController : MonoBehaviour {
 
     private void Update()
     {
-        UpdateSpriteRotation();
         UpdateAnimation();
-    }
-
-    void UpdateSpriteRotation()
-    {
-        Vector3 newAngles = new Vector3(0, 0, Vector2.SignedAngle(Vector2.down, pg.Gravity.normalized));
-
-        sprite.rotation = Quaternion.Lerp(Quaternion.Euler(sprite.localEulerAngles), Quaternion.Euler(newAngles), 10f * Time.fixedDeltaTime);
     }
 
     void UpdateAnimation()
