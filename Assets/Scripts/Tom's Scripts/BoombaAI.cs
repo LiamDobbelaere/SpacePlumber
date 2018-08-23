@@ -54,6 +54,10 @@ public class BoombaAI : MonoBehaviour {
             {
                 Destroy(gameObject);
             }
+            else
+            {
+                collision.collider.GetComponent<PlumberController>().TakeDamage();
+            }
         }
     }
 }

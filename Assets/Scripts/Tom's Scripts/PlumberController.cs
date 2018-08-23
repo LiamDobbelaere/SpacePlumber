@@ -11,6 +11,7 @@ public class PlumberController : MonoBehaviour {
     private PlanetGravity pg;
 
     private bool grounded;
+    private bool dead = false;
 
     private float jumpForce = 100f;
     private float jumpTime;
@@ -27,12 +28,21 @@ public class PlumberController : MonoBehaviour {
 	
 	//Remember, physics related stuff always in FixedUpdate
 	void FixedUpdate () {
-        FixedMovementUpdate();
+        if (!dead) FixedMovementUpdate();
     }
 
     private void Update()
     {
         UpdateAnimation();
+    }
+
+    public void TakeDamage()
+    {
+        if (!dead)
+        {
+            dead = true;
+            anim.SetTrigger("Die");
+        }
     }
 
     void UpdateAnimation()
