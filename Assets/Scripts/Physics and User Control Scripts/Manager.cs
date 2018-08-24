@@ -42,8 +42,7 @@ public class Manager : MonoBehaviour {
         Lives--;
         PlumberSprite.GetComponent<Animator>().SetTrigger("Die");
         PlumberBase.GetComponent<Rigidbody2D>().isKinematic = true;
-        PlumberBase.GetComponent<PlumberUserControl>().CanMoveLeft = false;
-        PlumberBase.GetComponent<PlumberUserControl>().CanMoveRight = false;
+        
 
         Health = 4;
 
@@ -51,7 +50,6 @@ public class Manager : MonoBehaviour {
 
         PlumberSprite.transform.position = new Vector3(0, 0, 0);
         PlumberBase.GetComponent<Rigidbody2D>().isKinematic = false;
-        PlumberBase.GetComponent<PlumberUserControl>().CanMoveLeft = true;
-        PlumberBase.GetComponent<PlumberUserControl>().CanMoveRight = true;
+        PlumberBase.GetComponent<PlumberController>().dead = false;
     }
 }

@@ -11,12 +11,13 @@ public class PlumberController : MonoBehaviour {
     private PlanetGravity pg;
 
     private bool grounded;
-    private bool dead = false;
+    public bool dead = false;
 
     private float jumpForce = 100f;
     private float jumpTime;
     private float jumpTimeMax = 0.15f;
 
+    public Manager Manager;
 	// Use this for initialization
 	void Start () {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -38,7 +39,9 @@ public class PlumberController : MonoBehaviour {
 
     public void TakeDamage()
     {
-        if (!dead)
+        Manager.Health--;
+
+        if (!dead && Manager.Health < 1)
         {
             dead = true;
             anim.SetTrigger("Die");
@@ -86,4 +89,6 @@ public class PlumberController : MonoBehaviour {
 
         Debug.DrawRay(transform.position, forward * 1f, Color.green);
     }
+
+    
 }

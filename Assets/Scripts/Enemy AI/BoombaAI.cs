@@ -29,7 +29,7 @@ public class BoombaAI : MonoBehaviour {
     void FixedMovementUpdate()
     {
         Vector2 forward = Vector2.Perpendicular(pg.Gravity.normalized);
-        rigidbody2d.AddForce(forward * direction * 20f);
+        rigidbody2d.AddForce(forward * direction * Random.Range(10,20));
         rigidbody2d.velocity = Vector2.ClampMagnitude(rigidbody2d.velocity, 1f);
 
         if (lastPosition != null)
