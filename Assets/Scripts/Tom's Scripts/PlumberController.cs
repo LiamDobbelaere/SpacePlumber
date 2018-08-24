@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlanetGravity))]
+[RequireComponent(typeof(AudioSource))]
 public class PlumberController : MonoBehaviour {
     private Rigidbody2D rigidbody2d;
     private Transform sprite;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
     private PlanetGravity pg;
+    private AudioSource audioSource;
 
-    private bool grounded;
     public bool dead = false;
+    public AudioClip jumpSound;
+    public Manager Manager;
 
     private float jumpForce = 100f;
     private float jumpTime;
     private float jumpTimeMax = 0.15f;
-
-    public Manager Manager;
+    private bool grounded;
+    
 	// Use this for initialization
 	void Start () {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -25,6 +28,7 @@ public class PlumberController : MonoBehaviour {
         anim = sprite.Find("Sprite").GetComponent<Animator>();
         spriteRenderer = sprite.Find("Sprite").GetComponent<SpriteRenderer>();
         pg = GetComponent<PlanetGravity>();
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	//Remember, physics related stuff always in FixedUpdate
@@ -83,6 +87,8 @@ public class PlumberController : MonoBehaviour {
             rigidbody2d.AddForce(-pg.Gravity.normalized * jumpForce, ForceMode2D.Force);
         }
         jumpTime += Time.fixedDeltaTime;
+
+        if (Input.GetButtonDown("Jump") && grounded) audioSource.PlayOneShot(jumpSound);
 
         //Limits the character from going as fast as sonic
         rigidbody2d.velocity = Vector2.ClampMagnitude(rigidbody2d.velocity, 8f);

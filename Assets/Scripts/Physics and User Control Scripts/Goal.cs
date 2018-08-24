@@ -16,8 +16,12 @@ public class Goal : MonoBehaviour {
 		if (hit.gameObject.tag == "Player")
         {
             PlumberSprite.SetTrigger("End");
+            GameObject.Find("Plum").transform.SetParent(GameObject.Find("Plumber").transform.Find("SpriteContainer").transform.Find("Sprite").transform);
             GameObject.Find("Plumber").GetComponent<PlumberController>().dead = true;
             GameObject.Find("End").GetComponent<Text>().enabled = true;
+            LoadSceneDelayed x = gameObject.AddComponent<LoadSceneDelayed>();
+            x.delayInSeconds = 4;
+            x.sceneName = "Winner";
         }
-	}
+    }
 }
